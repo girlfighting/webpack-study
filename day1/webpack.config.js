@@ -27,7 +27,7 @@
       rules:[
         {
           //匹配需要解析的文件
-          test:/\.css/,
+          test:/\.css$/,
           //使用哪些loader进行处理
           use : [
             //use数组中的loader执行顺序是从下往上执行的
@@ -39,7 +39,7 @@
         },
         //处理图片
         {
-          test:/\.(jpg|png|gif)/,
+          test:/\.(jpg|png|gif)$/,
           loader:'url-loader',
           options:{
             //图片大小小于8kb，就会被base64处理
@@ -57,13 +57,13 @@
         },
         //处理html中的img引入，负责引入img,从而能被url-loader处理
         {
-          test:/\.html/,
+          test:/\.html$/,
           loader:'html-loader'
         },
         //处理其他资源
         {
           //除了html/css/js都用file-loader进行解析
-          exclude:/\.(html|css|js)/,
+          exclude:/\.(html|css|js)$/,
           loader:'file-loader'
         }
       ]
