@@ -9,7 +9,7 @@
 
   //resolve 用来拼接所有绝对路径的
   const {resolve} = require("path");
-
+  const HtmlWebpackPlugin = require('html-webpack-plugin');
   module.exports = {
     //入口
     entry:"./src/index.js",
@@ -39,7 +39,15 @@
       ]
     },
     //plugin插件配置
-    plugins:[],
+    plugins:[
+      //html-webpack-plugin
+      //会自动生成一个html文件，并自动引入打包输出的所有资源
+      //需求:需要有结构的html文件
+      new HtmlWebpackPlugin({ 
+        //复制./src/index.html文件。./src/index.html
+        template:'./src/index.html'
+      })
+    ],
 
     //模式
     //开发模式
