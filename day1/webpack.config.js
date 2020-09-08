@@ -10,6 +10,7 @@
   //resolve 用来拼接所有绝对路径的
   const {resolve} = require("path");
   const HtmlWebpackPlugin = require('html-webpack-plugin');
+
   module.exports = {
     //入口
     entry:"./src/index.js",
@@ -35,6 +36,29 @@
             //将css文件变成commonj模块加载的js中，里面的内是样式字符串
             'css-loader'
           ]
+        },
+        //处理图片
+        {
+          test:/\.(jpg|png|gif)/,
+          loader:'url-loader',
+          options:{
+            //图片大小小于8kb，就会被base64处理
+            //优点：减少文件请求数量（减轻服务器压力）
+            //缺点：图片体积会更大（文件请求速度会更慢）
+            limit:8*1024,
+            //问题：url-loader默认使用es6模块化解析，而html-loader引入的图片是commonJS
+            //解析时会出现问题
+            //解决：关闭url-loader的es6模块化，使用commonJS进行解析
+            esModule:false,
+            //取原来打包生成文件名hash值的前10为
+            //ext原来的扩展名
+            name:'[hash:10][ext]',
+          },
+          //处理html中的img引入，负责引入img,从而能被url-loader处理
+          {
+            test:/\.html/,
+            loader:'html-loader'
+          }
         }
       ]
     },
