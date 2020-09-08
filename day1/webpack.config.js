@@ -54,11 +54,17 @@
             //ext原来的扩展名
             name:'[hash:10][ext]',
           },
-          //处理html中的img引入，负责引入img,从而能被url-loader处理
-          {
-            test:/\.html/,
-            loader:'html-loader'
-          }
+        },
+        //处理html中的img引入，负责引入img,从而能被url-loader处理
+        {
+          test:/\.html/,
+          loader:'html-loader'
+        },
+        //处理其他资源
+        {
+          //除了html/css/js都用file-loader进行解析
+          exclude:/\.(html|css|js)/,
+          loader:'file-loader'
         }
       ]
     },
