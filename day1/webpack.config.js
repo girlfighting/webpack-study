@@ -35,7 +35,10 @@
             'style-loader',
             //将css文件变成commonj模块加载的js中，里面的内是样式字符串
             'css-loader'
-          ]
+          ],
+          options:{
+            outputPath:'css'
+          }
         },
         //处理图片
         {
@@ -53,6 +56,8 @@
             //取原来打包生成文件名hash值的前10为
             //ext原来的扩展名
             name:'[hash:10][ext]',
+            //图片输出文件
+            outputPath:'img'
           },
         },
         //处理html中的img引入，负责引入img,从而能被url-loader处理
@@ -64,7 +69,10 @@
         {
           //除了html/css/js都用file-loader进行解析
           exclude:/\.(html|css|js)$/,
-          loader:'file-loader'
+          loader:'file-loader',
+          options:{
+            outputPath:other
+          }
         }
       ]
     },
@@ -84,4 +92,19 @@
     mode:"development",
     //生产模式--会将代码进行压缩
     // mode:"prodution",
+    
+    //开发服务器devserver,用来自动化（自动化编译、自动化打开浏览器、自动刷新浏览器）
+    //特点：只在内存中编译打包，不会有任何输出
+    //启动webpack指令：npx webpack-dev-server
+    devServer:{
+      //项目构建后的路径
+      contentBase:resolve(__dirname,'build'),
+      //启动gzip压缩
+      compress:true,
+      //端口号
+      port:'3000',
+      //自动打开浏览器
+      open:true,
+
+    }
   }
